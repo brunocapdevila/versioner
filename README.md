@@ -13,15 +13,15 @@ Names are placeholders. Both packages are private and unpublished. Choose an npm
 
 ## Development
 
-Use Node 22 or 24 for the development tools.
+Install [Vite+](https://viteplus.dev/guide/). The toolchain is pinned to Vite+ 1.3.0 and npm 11.19.1. Use Node 22.18+ or 24.11+ for the development tools. Run all project commands through `vp`; it delegates dependency management to the pinned npm version.
 
 ```sh
-npm ci
-npm run check
-npm run test:coverage
+vp install
+vp run verify
+vp test run --coverage
 ```
 
-`check` builds packages in dependency order, checks TypeScript contracts, runs unit tests, verifies Node ESM imports and browser-target bundles, and checks formatting. `npm run format` formats sources. Runtime code targets ES2022 and uses `structuredClone` by default; provide a custom clone strategy for other environments or data types.
+`vp run verify` builds packages in dependency order, runs Vite+ static checks and TypeScript contract checks, runs unit tests, and verifies Node ESM imports and browser-target bundles. Use `vp check` for formatting, linting, and type checks; `vp fmt` formats sources. Libraries build with `vp pack`, orchestrated by `vp run build`. Runtime code targets ES2022 and uses `structuredClone` by default; provide a custom clone strategy for other environments or data types.
 
 ## The envelope
 

@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it } from 'vite-plus/test';
 import semver from 'semver';
 import fixtures from './fixtures/node-semver.json' with { type: 'json' };
 import {
@@ -64,7 +64,7 @@ describe('node-semver v7.8.5 fixtures (strict inputs, supported API)', () => {
     });
   }
   for (const [v, reason] of fixtures['invalid-versions'])
-    it(`rejects ${String(reason)}`, () => expect(() => parse(v as string)).toThrow());
+    it(`rejects ${JSON.stringify(reason)}`, () => expect(() => parse(v as string)).toThrow());
   for (const [a, b, options] of fixtures.comparisons) {
     if (loose(options) || !strict(a) || !strict(b)) continue;
     it(`orders ${a} > ${b}`, () => {
@@ -93,7 +93,7 @@ describe('node-semver v7.8.5 fixtures (strict inputs, supported API)', () => {
     if (loose(options) || row.length > 5 || typeof v !== 'string' || typeof release !== 'string')
       continue;
     if (semver.valid(v) !== null && !strict(v)) continue;
-    it(`increments ${v} / ${release} / ${String(preid)}`, () => {
+    it(`increments ${v} / ${release} / ${JSON.stringify(preid)}`, () => {
       const run = () =>
         increment(v, release as Release, typeof preid === 'string' ? preid : undefined);
       if (expected === null) expect(run).toThrow();

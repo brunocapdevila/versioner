@@ -10,7 +10,9 @@
     "verbatimModuleSyntax": true,
     "skipLibCheck": true,
     "declaration": true,
-    "outDir": "dist"
+    "outDir": "dist",
+    "rootDir": ".",
+    "noEmit": true
   },
-  "include": ["src", "test", "vitest.config.ts"]
+  "include": ["packages/*/src", "packages/*/test", "packages/*/vite.config.ts", "vite.config.ts"]
 }

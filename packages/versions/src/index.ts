@@ -8,7 +8,14 @@ export interface Version {
 }
 export type VersionInput = string | number;
 export type Release =
-  'major' | 'minor' | 'patch' | 'premajor' | 'preminor' | 'prepatch' | 'prerelease' | 'release';
+  | 'major'
+  | 'minor'
+  | 'patch'
+  | 'premajor'
+  | 'preminor'
+  | 'prepatch'
+  | 'prerelease'
+  | 'release';
 export interface RangeOptions {
   readonly includePrerelease?: boolean;
 }

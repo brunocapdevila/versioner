@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { build } from 'esbuild';
+import { Rolldown } from 'vite-plus/pack';
 import { createVersioning } from '@versioner-local/versioner';
 import { compare, normalizeVersion, satisfies } from '@versioner-local/versions';
 assert.equal(normalizeVersion(1), '1.0.0');
@@ -13,17 +13,18 @@ assert.deepEqual(await engine.migrate({ version: '1', data: { name: 'Bruno' } },
   data: { name: 'Bruno', active: true },
 });
 for (const name of ['versions', 'versioner']) {
-  const bundle = await build({
-    entryPoints: [`packages/${name}/dist/index.js`],
-    bundle: true,
+  const bundle = await Rolldown.build({
+    input: `packages/${name}/dist/index.js`,
     platform: 'browser',
-    format: 'esm',
-    target: 'es2022',
+    output: { format: 'esm' },
     write: false,
   });
+  assert.equal(bundle.output.length, 1);
+  assert.equal(bundle.output[0].type, 'chunk');
+  assert.deepEqual(bundle.output[0].imports, []);
   // Execute the browser-target ESM bundle, with no Node polyfills or external dependencies.
   const module = await import(
-    `data:text/javascript;base64,${Buffer.from(bundle.outputFiles[0].text).toString('base64')}`
+    `data:text/javascript;base64,${Buffer.from(bundle.output[0].code).toString('base64')}`
   );
   assert.ok(
     name === 'versions'

@@ -68,7 +68,7 @@ type Add<M, F extends string, T extends string, I, O> = M &
   Record<Canonical<F>, I> &
   Record<Canonical<T>, O>;
 interface Edge extends MigrationStep {
-  transform: (data: unknown) => unknown | Promise<unknown>;
+  transform: (data: unknown) => unknown;
 }
 interface State {
   edges: readonly Edge[];

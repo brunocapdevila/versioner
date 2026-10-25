@@ -16,8 +16,8 @@
     }
   },
   "scripts": {
-    "build": "tsc -p tsconfig.build.json",
-    "prepack": "npm run build"
+    "build": "vp pack",
+    "prepack": "vp pack"
   },
   "dependencies": {
     "@versioner-local/versions": "0.1.0"

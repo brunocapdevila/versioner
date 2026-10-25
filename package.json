@@ -5,25 +5,26 @@
   "description": "Typed, framework-independent data versioning and migrations",
   "type": "module",
   "scripts": {
-    "build": "npm run build --workspaces",
+    "build": "vp -C packages/versions pack && vp -C packages/versioner pack",
     "typecheck": "tsc --noEmit -p packages/versions/tsconfig.json && tsc --noEmit -p packages/versioner/tsconfig.json",
-    "test": "vitest run",
-    "test:coverage": "vitest run --coverage",
-    "check": "npm run build && npm run typecheck && npm test && npm run smoke && npm run format:check",
-    "prepack": "npm run check",
-    "format": "prettier --write .",
-    "format:check": "prettier --check .",
-    "smoke": "node scripts/smoke.mjs"
+    "test": "vp test run",
+    "test:coverage": "vp test run --coverage",
+    "check": "vp check",
+    "prepack": "vp run verify",
+    "format": "vp fmt",
+    "format:check": "vp fmt --check",
+    "smoke": "node scripts/smoke.mjs",
+    "verify": "vp run build && vp check && vp run typecheck && vp test run && vp run smoke"
   },
   "devDependencies": {
     "@types/node": "^24.0.0",
     "@types/semver": "^7.7.0",
     "@vitest/coverage-v8": "5.0.5",
-    "esbuild": "^0.28.2",
-    "prettier": "^3.9.10",
     "semver": "7.8.5",
     "typescript": "7.0.2",
-    "vitest": "5.0.5"
+    "vitest": "5.0.5",
+    "vite-plus": "1.3.0",
+    "vite": "npm:@voidzero-dev/vite-plus-core@1.3.0"
   },
   "workspaces": [
     "packages/versions",
@@ -33,5 +34,13 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/brunocapdevila/versioner.git"
+  },
+  "packageManager": "npm@11.19.1",
+  "overrides": {
+    "vite": "npm:@voidzero-dev/vite-plus-core@1.3.0",
+    "vitest": "5.0.5"
+  },
+  "engines": {
+    "node": "^22.18.0 || ^24.11.0 || >=26.0.0"
   }
 }

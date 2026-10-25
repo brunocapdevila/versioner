@@ -1,4 +1,4 @@
-import { describe, expect, expectTypeOf, it } from 'vitest';
+import { describe, expect, expectTypeOf, it } from 'vite-plus/test';
 import { createVersioning, migrateResource, MigrationError } from '../src/index.js';
 import type { Versioned } from '../src/index.js';
 
@@ -295,11 +295,11 @@ function typeContracts() {
   // @ts-expect-error same canonical source and destination
   b.addMigration({ from: '1', to: '1.0.0', transform: (v: V1) => v });
   // @ts-expect-error incorrect source payload
-  b.build().migrate({ version: '1', data: 4 }, '2');
+  void b.build().migrate({ version: '1', data: 4 }, '2');
   // @ts-expect-error unknown target
-  b.build().migrate(source(), '3');
+  void b.build().migrate(source(), '3');
   // @ts-expect-error unknown source
-  b.build().migrate({ version: '9', data: source().data }, '2');
+  void b.build().migrate({ version: '9', data: source().data }, '2');
 }
 void typeContracts;
 
